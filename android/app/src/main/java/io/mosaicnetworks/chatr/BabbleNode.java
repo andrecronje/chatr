@@ -43,6 +43,10 @@ public class BabbleNode {
             _node.run(true);
     }
 
+    public void SubmitTx(byte[] tx) {
+        _node.submitTx(tx);
+    }
+
     Config getConfig() {
         File folder = _context.getExternalFilesDir(null);    //===/storage/sdcard0/Android/data/io.babble.mobile.myapplication/files==
         if (!folder.exists()) {
