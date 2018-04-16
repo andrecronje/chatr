@@ -12,10 +12,10 @@ The SDK is from the *martin_mobile* branch... not *mobile*.
 1) Copy configuration file to emulated device:
 
 ```
-adb push demo/mobile_node/ConfigBabbleMobile.json /storage/emulated/0/Android/data/io.mosaicnetworks.chatr/files/
+adb push demo/mobile_node/ConfigBabbleMobile.json /storage/emulated/0/Android/data/io.mosaicnetworks.chatr/files/ConfigBabbleMobile.json
 ```
 
-2) iEstablish port forwarding on emulator:
+2) Establish port forwarding on emulator:
 
 ```
 adb forward tcp:6666 tcp:6666
