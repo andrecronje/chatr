@@ -23,16 +23,26 @@ public class BabbleNode {
         _context = context;
 
         _config = getConfig();
-        String peers = gson2String(_config.peers);
-        MobileConfig babbleConfig = Mobile.defaultMobileConfig();
 
+        MobileConfig babbleConfig = new MobileConfig(
+                _config.Heartbeat,
+                _config.TCPTimeout,
+                _config.MaxPool,
+                _config.CacheSize,
+                _config.SyncLimit,
+                _config.StoreType,
+                _config.StorePath
+        );
 
         ChatrCommitHandler commitHandler = new ChatrCommitHandler(context);
         ChatrExceptionHandler exceptionHandler = new ChatrExceptionHandler(context);
 
-        _node = Mobile.new_(_config.node_addr,
+        String peers = gson2String(_config.Peers);
+
+        _node = Mobile.new_(
+                _config.PrivateKey,
+                _config.NodeAddr,
                 peers,
-                _config.nodePrivateKey,
                 commitHandler,
                 exceptionHandler,
                 babbleConfig);
@@ -48,7 +58,7 @@ public class BabbleNode {
     }
 
     Config getConfig() {
-        File folder = _context.getExternalFilesDir(null);    //===/storage/sdcard0/Android/data/io.babble.mobile.myapplication/files==
+        File folder = _context.getExternalFilesDir(null);    //===/storage/sdcard0/Android/data/io.mosaicnetworks.chatr/files==
         if (!folder.exists()) {
             throw new ArithmeticException(String.format(String.format("Config folder not found '%s'", folder)));
         }
@@ -69,7 +79,7 @@ public class BabbleNode {
             Config res = gson.fromJson(strJson, Config.class);
             return res;
         }catch(Exception e){
-            throw new ArithmeticException(String.format("Unexpected error occur while loading json file '%s', %s", file, e.toString()));
+            throw new ArithmeticException(String.format("Unexpected error occurred while loading json file '%s', %s", file, e.toString()));
         }
     }
 

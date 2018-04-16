@@ -5,42 +5,42 @@ import com.google.gson.annotations.SerializedName;
 public class Config {
 
     @SerializedName("Peers")
-    public Peer [] peers;
+    public Peer[] Peers;
 
-    @SerializedName("NodeID")
-    public int nodeID;     //0 one of array indexes above
+    //ex: "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIP7PIEnr/7RUSLc55XP44GTsAxsSg/AzekqHqXDQxfGKoAoGCCqGSM49AwEHoUQDQgAEpM2p+b0DxYTEJaPtGiaM2oVjtixMbx5S6BrVUDREuH8A4rNKrAWohJFZHHG6U5w15y9KaTYntoB5Cq/mS0x6ww==\n-----END EC PRIVATE KEY-----"
+    @SerializedName("PrivateKey")
+    public String PrivateKey;
 
-    @SerializedName("NodePrivateKey")
-    public String nodePrivateKey;  //"-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIP7PIEnr/7RUSLc55XP44GTsAxsSg/AzekqHqXDQxfGKoAoGCCqGSM49AwEHoUQDQgAEpM2p+b0DxYTEJaPtGiaM2oVjtixMbx5S6BrVUDREuH8A4rNKrAWohJFZHHG6U5w15y9KaTYntoB5Cq/mS0x6ww==\n-----END EC PRIVATE KEY-----",
+    // IP:Port to bind Babble
+    @SerializedName("NodeAddr")
+    public String NodeAddr;
 
-    @SerializedName("NodePublicKey")
-    public String nodePublicKey;   //"0x04A4CDA9F9BD03C584C425A3ED1A268CDA8563B62C4C6F1E52E81AD5503444B87F00E2B34AAC05A88491591C71BA539C35E72F4A693627B680790AAFE64B4C7AC3",
-
-    @SerializedName("Node_addr")
-    public String node_addr;       // "10.128.1.36:1331",
-
-    @SerializedName("Proxy_addr")
-    public String proxy_addr;      //"10.128.1.36:1332",
-
-    @SerializedName("Client_addr")
-    public String client_addr;     //"10.128.1.36:1333",
-
-    @SerializedName("Service_addr")
-    public String service_addr;    //"10.128.1.36:1334",
-
+    //"inmem" or "badger"
     @SerializedName("StoreType")
-    public String storeType;       //"inmem" or "badger"
+    public String StoreType;
 
+    //File containing the Store DB
     @SerializedName("StorePath")
-    public String storePath;        //"D:\\Projects\\go-work\\...
+    public String StorePath;
 
-    @SerializedName("CircleBackColor")
-    public String circleBackColor;  //"BLUE" alwyas upper case
+    //Heartbeat timeout in milliseconds (1000)
+    @SerializedName("Heartbeat")
+    public int Heartbeat;
 
-    @SerializedName("CircleForeColor")
-    public String circleForeColor;   //"WHITE" alwyas upper case
+    //TCP timeout milliseconds (1000)
+    @SerializedName("TCPTimeout")
+    public int TCPTimeout;
 
-    @SerializedName("CircleRadius")
-    public int circleRadius;         //[50, 150]
+    //Max number of pooled connections (2)
+    @SerializedName("MaxPool")
+    public int MaxPool;
+
+    //Number of items in LRU cache (500)
+    @SerializedName("CacheSize")
+    public int CacheSize;
+
+    //Max Events per sync (1000)
+    @SerializedName("SyncLimit")
+    public int SyncLimit;
 
 }
