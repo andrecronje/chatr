@@ -1,6 +1,7 @@
 package io.mosaicnetworks.chatr;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
@@ -20,15 +21,8 @@ public class ChatrCommitHandler implements CommitHandler {
             @Override
             public void run() {
                 Log.i("Babble", "Received CommitTx " + tx);
-
-                String message = null;
-                try {
-                    message = new String(tx, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                _context._messages.add(message);
-                _context._adapter.notifyDataSetChanged();
+                Message message = Message.Decode(tx);
+                _context.displayMessage(message);
             }
         });
     }

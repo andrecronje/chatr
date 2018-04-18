@@ -25,5 +25,11 @@ adb forward tcp:6666 tcp:6666
 4) Start the desktop node by running:
 
 ```
-babble run --datadir=$PWD/demo/desktop_node/datadir --store=inmem --noclient --node_addr=10.0.0.8:1337
+babble run --datadir=$PWD/demo/desktop_node/datadir --store=inmem --node_addr=10.0.0.8:1337
+```
+
+5) Optionaly use pybabblesdk to send messages through the host node:
+
+```
+./sendmessage --nodehost=127.0.0.1 --nodeport=1338 --listenhost=127.0.0.1 --listenport=1339
 ```

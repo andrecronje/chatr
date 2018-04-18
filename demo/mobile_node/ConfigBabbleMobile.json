@@ -7,16 +7,16 @@
 	  {
 	  	"NetAddr":"127.0.0.1:6666",
 	  	"PubKeyHex":"0x04A643FE46736C08390BFE2671566A1A6826A84A1678BCB349A3E67F872125F1CE1E78E7982ECAF421B74D73C0E267DDE06B9AD1AB449BAE1B47B8EDABA9736945"
-	  }
+    }
   ],
 
   "PrivateKey": "-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIK02PIb5AYLe9E7xYscBAzzW/LU4dtvFNOlAK/HrGMoUoAoGCCqGSM49AwEHoUQDQgAEpkP+RnNsCDkL/iZxVmoaaCaoShZ4vLNJo+Z/hyEl8c4eeOeYLsr0IbdNc8DiZ93ga5rRq0SbrhtHuO2rqXNpRQ==\n-----END EC PRIVATE KEY-----",
-	"NodeAddr": "127.0.0.1:6666",
-	"StoreType": "inmem",
-	"StorePath": "",
-	"Heartbeat": 1000,
-	"TCPTimeout": 1000,
-	"MaxPool":2,
-	"CacheSize": 500,
-	"SyncLimit":1000
+  "NodeAddr": "127.0.0.1:6666",
+  "StoreType": "inmem",
+  "StorePath": "",
+  "Heartbeat": 50,
+  "TCPTimeout": 200,
+  "MaxPool":2,
+  "CacheSize": 500,
+  "SyncLimit":1000
 }
