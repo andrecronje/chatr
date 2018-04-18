@@ -83,10 +83,10 @@ public class BabbleNode {
         }
     }
 
-    String  gson2String ( Peer[] pears) {
+    String  gson2String ( Peer[] peers) {
         try {
             Gson gson = new Gson();
-            String strJson = gson.toJson(pears);
+            String strJson = gson.toJson(peers);
             return strJson;
         }catch(Exception e){
             throw new ArithmeticException(String.format("Unexpected error occurred while converting json to string. %s",  e.toString()));
