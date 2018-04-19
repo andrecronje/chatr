@@ -2,6 +2,7 @@ package io.mosaicnetworks.chatr;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.security.MessageDigest;
 
 public class Message {
     public String from;
@@ -24,9 +25,27 @@ public class Message {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String from = tx.substring(0, tx.indexOf("|"));
-        String content = tx.substring(tx.indexOf("|") +2, tx.length());
+
+        String from = "";
+        String content = "";
+
+        if (tx.indexOf("|") == -1) {
+            content = tx;
+        }else {
+            from = tx.substring(0, tx.indexOf("|"));
+            content = tx.substring(tx.indexOf("|") +2, tx.length());
+        }
         return new Message(from, content);
+    }
+
+    public byte[] Hash() {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(this.Encode());
+            return hash;
+        }catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
     }
 
 

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     BabbleNode _babbleNode;
 
     List<Message> messageList = new ArrayList<Message>();
+    byte[] stateHash = null;
+
     MessageListAdapter messageAdapter;
     RecyclerView messageRecycler;
 
@@ -82,8 +85,24 @@ public class MainActivity extends AppCompatActivity {
         _babbleNode.SubmitTx(messageBytes);
     }
 
-    public void displayMessage(Message message) {
+    public void processMessage(Message message) {
         messageList.add(message);
+        stateHash = hashFromTwoHashes(stateHash, message.Hash());
+    }
+
+    public byte[] hashFromTwoHashes(byte[] a, byte[] b) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] tempHash = new byte[a.length + b.length];
+            System.arraycopy(a, 0, tempHash, 0, a.length);
+            System.arraycopy(b, 0, tempHash, 0, b.length);
+            return digest.digest(tempHash);
+        }catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void updateUI() {
         messageAdapter.notifyDataSetChanged();
         messageRecycler.scrollToPosition(messageList.size() -1);
     }

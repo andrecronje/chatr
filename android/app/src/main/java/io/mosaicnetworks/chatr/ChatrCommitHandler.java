@@ -36,22 +36,37 @@ public class ChatrCommitHandler implements CommitHandler {
     }
 
     @Override
-    public void onCommit(final byte[] blockBytes){
+    public byte[] onCommit(final byte[] blockBytes){
+        Log.i("Babble", "Received CommitBlock " + blockBytes.toString());
+
+        String strJson = new String(blockBytes);
+        Block block = null;
+        try {
+            block = _customGson.fromJson(strJson, Block.class);
+        } catch(Exception ex) {
+            Log.e("Babble", "Failed to parse Block", ex);
+            return null;
+        }
+
+        for (int i = 0; i < block.Body.Transactions.length; i++){
+            byte[] tx = block.Body.Transactions[i];
+            try {
+                Message message = Message.Decode(block.Body.Transactions[i]);
+                _context.processMessage(message);
+            }catch(Exception ex){
+                Log.e("Babble", "Failed to parse Transaction", ex);
+            }
+        }
+
+
         _context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.i("Babble", "Received CommitBlock " + blockBytes);
-
-                String strJson = new String(blockBytes);
-                Block block = _customGson.fromJson(strJson, Block.class);
-
-                Log.i("Babble", "Received CommitBlock " + block);
-
-                for (int i = 0; i < block.Transactions.length; i++){
-                    Message message = Message.Decode(block.Transactions[i]);
-                    _context.displayMessage(message);
-                }
+                _context.updateUI();
             }
         });
+
+
+        return _context.stateHash;
     }
 }
