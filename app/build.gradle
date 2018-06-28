@@ -16,6 +16,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets { main { java.srcDirs = ['src/main/java', 'src/main/java/db'] } }
 }
 
 dependencies {
@@ -29,4 +30,7 @@ dependencies {
     implementation 'com.android.support:design:27.1.0'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+
 }
