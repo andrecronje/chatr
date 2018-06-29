@@ -24,6 +24,9 @@ public class Contact implements Serializable{
     @ColumnInfo(name = "name")
     private String name;
 
+    @ColumnInfo(name = "me_flag")
+    private boolean meFlag;
+
     public String getPubKeyHex() {
         return pubKeyHex;
     }
@@ -46,6 +49,14 @@ public class Contact implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean getMeFlag() {
+        return meFlag;
+    }
+
+    public void setMeFlag(boolean meFlag) {
+        this.meFlag = meFlag;
     }
 
 }

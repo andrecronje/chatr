@@ -9,6 +9,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,7 +22,6 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import io.mosaicnetworks.chatr.db.AppDatabase;
 import io.mosaicnetworks.chatr.db.Contact;
@@ -27,7 +29,6 @@ import io.mosaicnetworks.chatr.db.Contact;
 public class ContactsActivity extends AppCompatActivity implements ContactsListAdapter.ItemClickListener{
 
     AppDatabase db;
-    Random rand = new Random();
     List<Contact> contactsList = new ArrayList<>();
     ContactsListAdapter adapter;
 
@@ -35,6 +36,8 @@ public class ContactsActivity extends AppCompatActivity implements ContactsListA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+
+        //getApplicationContext().deleteDatabase("contacts-database");
 
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "contacts-database").allowMainThreadQueries().build();
 
@@ -64,6 +67,26 @@ public class ContactsActivity extends AppCompatActivity implements ContactsListA
         //placeholder
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.contacts_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.share_my_contact:
+                Intent intent = new Intent(this, ShareMyContactActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     /** Called when the user taps the plus button to add a new contact - Starts QR scanner*/
     public void addContact(View view) {
 
@@ -85,7 +108,7 @@ public class ContactsActivity extends AppCompatActivity implements ContactsListA
 
                 try {
                     Contact contact = gson.fromJson(result.getContents(), Contact.class);
-                    Log.d("myTag", contact.getPubKeyHex());
+                    contact.setMeFlag(false);
                     db.contactDao().insertAll(contact);
                     Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                     contactsList.add(contact);
