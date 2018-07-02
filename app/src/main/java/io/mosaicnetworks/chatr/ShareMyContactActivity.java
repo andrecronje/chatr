@@ -27,7 +27,7 @@ public class ShareMyContactActivity extends AppCompatActivity {
     }
 
     private void displayQRCode() {
-        Contact contact = db.contactDao().findByName("Me","Me");
+        Contact contact = db.contactDao().findByUserName("Me!","Me!");
 
         Gson gson = new Gson();
         String content = gson.toJson(contact);

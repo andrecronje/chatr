@@ -20,12 +20,9 @@ public class Contact implements Serializable{
     @ColumnInfo(name = "net_addr")
     private String netAddr;
 
-    @SerializedName("Name")
-    @ColumnInfo(name = "name")
-    private String name;
-
-    @ColumnInfo(name = "me_flag")
-    private boolean meFlag;
+    @SerializedName("UserName")
+    @ColumnInfo(name = "user_name")
+    private String userName;
 
     public String getPubKeyHex() {
         return pubKeyHex;
@@ -43,20 +40,12 @@ public class Contact implements Serializable{
         this.netAddr = netAddr;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean getMeFlag() {
-        return meFlag;
-    }
-
-    public void setMeFlag(boolean meFlag) {
-        this.meFlag = meFlag;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
 }

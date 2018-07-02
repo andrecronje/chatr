@@ -34,7 +34,7 @@ public class ContactsListAdapter extends RecyclerView.Adapter<ContactsListAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Contact member = mData.get(position);
-        holder.nameTextView.setText(member.getName());
+        holder.nameTextView.setText(member.getUserName());
         holder.ipTextView.setText(member.getNetAddr());
     }
 

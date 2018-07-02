@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -90,39 +91,12 @@ public class ContactsActivity extends AppCompatActivity implements ContactsListA
         }
     }
 
-    /** Called when the user taps the plus button to add a new contact - Starts QR scanner*/
+    /** Called when the user taps the plus button */
     public void addContact(View view) {
+        Intent intent = new Intent(this, AddContactActivity.class);
+        startActivity(intent);
 
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setOrientationLocked(false);
-        integrator.setPrompt("Scan code");
-        integrator.initiateScan();
     }
 
-    // Get the results:
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null) {
-            if(result.getContents() == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-            } else {
-                Gson gson = new Gson();
 
-                try {
-                    Contact contact = gson.fromJson(result.getContents(), Contact.class);
-                    contact.setMeFlag(false);
-                    db.contactDao().insertAll(contact);
-                    Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                    contactsList.add(contact);
-                    adapter.notifyDataSetChanged();
-                } catch (JsonSyntaxException e) {
-                    Toast.makeText(this, "Invalid code: " + result.getContents(), Toast.LENGTH_LONG).show();
-                } catch (SQLiteConstraintException e) {
-                    Toast.makeText(this, "A contact with same public key already exists", Toast.LENGTH_LONG).show();
-                }
-
-            }
-        }
-    }
 }

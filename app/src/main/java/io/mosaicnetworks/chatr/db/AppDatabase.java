@@ -51,12 +51,11 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public static Contact populateData() {
         Contact contact = new Contact();
-        contact.setName("Me");
+        contact.setUserName("Me!");
         String keyPair = Mobile.getPrivPublKeys();    //publicKey[!@#$%^]privateKey
         String[] separated =  keyPair.split("=!@#@!=");
         contact.setPubKeyHex(separated[0].trim());
         contact.setNetAddr(Utils.getIPAddress(true) + ":6666");
-        contact.setMeFlag(true);
         return contact;
     }
 
