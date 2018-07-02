@@ -37,11 +37,14 @@ public class ContactsActivity extends AppCompatActivity implements ContactsListA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
-        //getApplicationContext().deleteDatabase("contacts-database");
+        getApplicationContext().deleteDatabase("contacts-database");
+        getApplicationContext().deleteDatabase("my-database");
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "contacts-database").allowMainThreadQueries().build();
+        //db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "contacts-database").allowMainThreadQueries().build();
+        db = AppDatabase.getInstance(getApplicationContext());
 
         contactsList = db.contactDao().getAll();
+        //Log.d("myTag", String.valueOf(contactsList.size()));
         initRecyclerView();
 
     }
@@ -116,7 +119,7 @@ public class ContactsActivity extends AppCompatActivity implements ContactsListA
                 } catch (JsonSyntaxException e) {
                     Toast.makeText(this, "Invalid code: " + result.getContents(), Toast.LENGTH_LONG).show();
                 } catch (SQLiteConstraintException e) {
-                    Toast.makeText(this, "Contact with same public key already exists", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "A contact with same public key already exists", Toast.LENGTH_LONG).show();
                 }
 
             }

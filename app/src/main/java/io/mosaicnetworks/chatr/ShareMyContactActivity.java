@@ -9,24 +9,28 @@ import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import io.mosaicnetworks.chatr.db.AppDatabase;
+import io.mosaicnetworks.chatr.db.Contact;
+
 public class ShareMyContactActivity extends AppCompatActivity {
+
+    AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_my_contact);
 
+        db = AppDatabase.getInstance(getApplicationContext());
+
         displayQRCode();
     }
 
     private void displayQRCode() {
-        Peer peer = new Peer();
-        peer.pubKeyHex = "123";
-        peer.netAddr = "123";
-        peer.name = "abc";
+        Contact contact = db.contactDao().findByName("Me","Me");
 
         Gson gson = new Gson();
-        String content = gson.toJson(peer);
+        String content = gson.toJson(contact);
 
         try {
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
